@@ -1,0 +1,21 @@
+{
+  "name": "form-state-handler",
+  "version": "1.0.0",
+  "description": "a state-handler for html-forms and its inputfields",
+  "main": "lib/form-state-handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "babel-preset-minify": "^0.5.1"
+  },
+  "dependencies": {
+    "core-js": "^3.6.1"
+  }
+}
