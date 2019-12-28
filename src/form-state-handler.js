@@ -21,18 +21,6 @@ class FormStateHandler {
 
 			this.inputFields[newField.name] = newField;
 		}
-
-		this.previousReset = this.element.onreset;
-		if (this.previousReset) {
-			this.element.onreset = ($event) => {
-				this.previousReset($event);
-				this.reset();
-			}
-		} else {
-			this.element.reset = () => {
-				this.reset();
-			}
-		}
 	}
 
 	/**

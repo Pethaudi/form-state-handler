@@ -1,5 +1,6 @@
 # form-state-handler
 a state-handler for html-forms and its inputfields
+
 Forms in html and js are not easy to handle. This package tries to create the managing of forms more easyily, more concretly: receiving values, validatiting forms and inputfields and styling.
 
 ## Overview
@@ -29,7 +30,7 @@ This example would render the the inputfield red if the element hasn't a valid s
 
 ## Usage
 This package provides 2 classes:
-* FormStateHandler (handles a form with all its inputfields)
+* FormStateHandler (handles a form/container with all its inputfields)
 * InputField (handles a single inputfield)
 
 To use this package every inputfield needs a name, so its value can be correctly accessed (needs to unique within a form).
@@ -43,6 +44,11 @@ function login() {
 	const stateOfForm = stateHandler.getFormData();
 	console.log(stateOfForm);
 }
+
+// for one single inputfield
+const inputElement = document.querySelector("#input");
+
+const inputHandler = new InputField(inputElement);
 ```
 
 This example will render the state of a form and every of its inputfields to the according dom-elements where it can be easily accessed:
@@ -60,4 +66,20 @@ And the output of the `statehandler.getFormDate()` function will be something li
 	"email": "example@mail.net",
 	"password": "secret"
 }
+```
+
+## Constraints
+There are several thing you can check for on an inputfield (everything represents its own attribute where you pass the value):
+ * required (element must be given)
+ * regex (a regex, for example: ^[ab]+$)
+ * min (minimum value of a numeric input)
+ * max (maximum value of a numeric input)
+ * minStrLength (minimum length of the input string, additional you can use the minlength attribute, but then the user can't input less then x characters)
+ * maxStrLength (maximum length of the input string, additional you can use the maxlength attribute, but then the user can't input more then x characters)
+
+*Additional: if the input has the type email, the input gets checked seperatly from the standard html-validation for maximum flexibility*
+
+**example:**
+```html
+<input type="text" regex="^[a-zA-Z0-9]*$" minStrLength="1" maxStrLength="5" required>
 ```
