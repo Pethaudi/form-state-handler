@@ -168,6 +168,26 @@ class InputField {
 			throw new Error("every input-field needs a name.")
 		}
 
+		this.required = this.element.getAttribute("required");
+		this.pattern = this.element.getAttribute("regex");
+		this.min = parseInt(this.element.getAttribute("min"));
+		if (isNaN(this.min)) {
+			this.min = null;
+		}
+		this.max = parseInt(this.element.getAttribute("max"));
+		if (isNaN(this.max)) {
+			this.max = null;
+		}
+		this.minLength = parseInt(this.element.getAttribute("minStrLength"));
+		if (isNaN(this.minLength)) {
+			this.minLength = null;
+		}
+		this.maxLength = parseInt(this.element.getAttribute("maxStrLength"));
+		if (isNaN(this.maxLength)) {
+			this.maxLength = null;
+		}
+		this.email = this.element.getAttribute("type") === "email";
+
 		this.stateChangesCallback = stateChangesCallback;
 		this.states = {};
 		this.originalContent = this.content;
@@ -261,20 +281,40 @@ class InputField {
 	 * checks the input field
 	 */
 	validate() {
-		const content = this.element.value;
-		const required = this.element.getAttribute("required");
-		const pattern = this.element.getAttribute("pattern");
+		let valid = true;
 
-		// not required and has no pattern given
-		if (!required && !pattern) {
-			this.states.valid = true;
-			// is required but there is no input
-		} else if (required && content.length === 0) {
-			this.states.valid = false;
-		} else {
-			this.states.valid = content.match(pattern);
+		if (this.required !== null && this.content.length === 0) {
+			valid = false;
 		}
-		this.assignCurrentState();
+		
+		if (this.pattern !== null && this.content.match(this.pattern) === null) {
+			valid = false;
+		}
+
+		if (this.min !== null && (isNaN(this.content) || parseInt(this.content) < this.min)) {
+			valid = false;
+		}
+
+		if (this.max !== null && (isNaN(this.content) || parseInt(this.content) > this.max)) {
+			valid = false;
+		}
+
+		if (this.minLength !== null && this.content.length < this.minLength) {
+			valid = false;
+		}
+
+		if (this.maxLength !== null && this.content.length > this.maxLength) {
+			valid = false;
+		}
+
+		if (this.email && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.content)) {
+			valid = false;
+		}
+
+		if (this.states.valid !== valid) {
+			this.states.valid = valid;
+			this.assignCurrentState();
+		}
 	}
 
 	/**
