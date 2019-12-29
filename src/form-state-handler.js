@@ -2,8 +2,9 @@
  * manages an entire form and all containing inputfields
  */
 class FormStateHandler {
-	constructor(element) {
+	constructor(element, stateChangesCallback) {
 		this.element = element;
+		this.stateChangesCallback = stateChangesCallback;
 		this.states = {
 			valid: false,
 			dirty: false,
@@ -47,6 +48,7 @@ class FormStateHandler {
 	 * gets invoked from a changed input field and updates the state of the form
 	 */
 	fieldChanged(state) {
+		const oldState = JSON.parse(JSON.stringify(this.states));
 		let checkValid = false;
 		let checkDirty = false;
 		let checkTouched = false;
@@ -89,6 +91,11 @@ class FormStateHandler {
 		this.states.touched = !checkTouched;
 
 		this.assignCurrentState();
+
+		if ((this.states.valid !== oldState.valid || this.states.dirty !== oldState.dirty ||
+			this.states.touched !== oldState.touched) && this.stateChangesCallback) {
+			this.stateChangesCallback(this.states, oldState);
+		}
 	}
 
 	/**
@@ -110,6 +117,10 @@ class FormStateHandler {
 	 */
 	get isDirty() {
 		return this.states.dirty;
+	}
+
+	get isTouched() {
+		return this.states.touched;
 	}
 
 	/**
@@ -337,7 +348,7 @@ class InputField {
 	}
 
 	reset() {
-		element.initState();
+		this.initState();
 	}
 }
 

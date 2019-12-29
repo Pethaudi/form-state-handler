@@ -68,7 +68,7 @@ And the output of the `statehandler.getFormDate()` function will be something li
 }
 ```
 
-## Constraints
+### Constraints
 There are several thing you can check for on an inputfield (everything represents its own attribute where you pass the value):
  * required (element must be given)
  * regex (a regex, for example: ^[ab]+$)
@@ -83,3 +83,82 @@ There are several thing you can check for on an inputfield (everything represent
 ```html
 <input type="text" regex="^[a-zA-Z0-9]*$" minStrLength="1" maxStrLength="5" required>
 ```
+
+## Documenation
+
+This package consists of 2 classes:
+ * FormStateHandler
+ * InputField
+
+### FormStateHandler
+This class handles a whole form/container and the states of its inputfields.
+
+#### methodes
+**constructor(element, stateChangesCallback)**
+Creates the FormStateHandler, queries for possible inputfields under the form/container and applies the current state to the given element.
+*params*
+ * element: domelement of the form/container
+ * stateChangesCallback: callbackfunction(currentState, oldState), gets called if the state of the form/container changes (state contains the following fields: valid, dirty, touched)
+
+**reset()**
+Resets the FormStateHandler to its initial state (including all inputfields).
+
+**getInputField(name)**
+Returns the InputField-Object (not the domelement) of the given name.
+*params*
+ * name: name of the inputfield
+
+**getDomElement(name)**
+Returns the domelement of the given name.
+*params*
+ * name: name of the inputfield
+
+**getContentOf(name)**
+Returns the current value of the given name.
+*params*
+ * name: name of the inputfield
+
+**getFormData()**
+Returns the value for every inputfield in the form/container in the form of:
+```json
+{
+	"name of inputfield": "value of inputfield",
+	....
+}
+```
+
+#### getters/setters
+Those should self-explanatory.
+**get isPristine**
+**get isValid**
+**get isDirty**
+**get isTouched**
+
+### InputField
+This class handles on single inputfield and its state.
+
+#### methodes
+**constructor(element, stateChangesCallback)**
+Creates the InputField and applies the current state to the given element.
+*params*
+ * element: domelement of the inputfield
+ * stateChangesCallback: callbackfunction(currentState), gets called if the state of the inputfield gets assigned (state contains the following fields: valid, dirty, touched)
+
+**reset()**
+Resets the inputfield.
+
+**validate()**
+validates the inputfield and assigns the new state.
+
+#### getters/setters
+Those should self-explanatory.
+**get/set content**
+**get name**
+**get isPristine**
+**get isValid**
+**get isDirty**
+**get isTouched**
+
+## Contribute/Support
+feel free to message me:
+pethaudi@yahoo.de
