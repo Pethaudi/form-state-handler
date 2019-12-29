@@ -132,9 +132,13 @@ Returns the value for every inputfield in the form/container in the form of:
 #### getters/setters
 Those should self-explanatory.
 **get isPristine**
+
 **get isValid**
+
 **get isDirty**
+
 **get isTouched**
+
 
 ### InputField
 This class handles on single inputfield and its state.
@@ -154,12 +158,19 @@ validates the inputfield and assigns the new state.
 
 #### getters/setters
 Those should self-explanatory.
+
 **get/set content**
+
 **get name**
+
 **get isPristine**
+
 **get isValid**
+
 **get isDirty**
+
 **get isTouched**
+
 
 ## Contribute/Support
 feel free to message me:
