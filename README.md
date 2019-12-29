@@ -29,6 +29,8 @@ input[name="textfield"][valid="false"] {
 This example would render the the inputfield red if the element hasn't a valid state.
 
 ## Usage
+Install with: `npm i form-state-handler`. (When using without npm, you can download the repo, remove the exports lines at the end of the file, run `npm run build` and use the file under `/lib`)
+
 This package provides 2 classes:
 * FormStateHandler (handles a form/container with all its inputfields)
 * InputField (handles a single inputfield)
